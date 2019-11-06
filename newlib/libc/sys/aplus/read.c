@@ -29,7 +29,7 @@
 #include <errno.h>
 
 __attribute__((weak))
-_READ_WRITE_RETURN_TYPE read(int fd, void* buf, size_t count) {
+_READ_WRITE_RETURN_TYPE read(int fd, void* buf, _READ_WRITE_BUFSIZE_TYPE count) {
     errno = ENOSYS;
     return -1;
 }

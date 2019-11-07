@@ -27,15 +27,15 @@ before_deploy:
 
 deploy:
   provider: releases
-  api_key:
+  token:
     secure: NjHnoZX4Hg6spbYtHNLzPVwecNsbM+PF+6DHu/4iRvyZSqQ5p2NLvdv6k1HGuyUfdkatnCL+1h8ZKv0dJasKqRf4qfhxw1uPFDAxkmH3ARXPlxwQeNYnkRPiXK919PAXKPmHnXXSpfcAJyGCq35ei0VOxrECLiK76aD5MUsmYzlwE6XCJFuYOhRS3ZRIAF2xEXcYTsxce5BAvMjOTJvIcvxXS1IGVNfP2i0+BSgTpRWpfxVEyMFIz9dpLv7l3RetxfkaXvz+DwTeFjqgFDIVwsqgjxevL9mRi5Ip91JtB2JwS7Tde402r+yCjhJPvZ4XkcFxO67KiPZkcdmdqYmTRClaHNhdHCHbSSkBZ8I9napTvl58abpZ5Nj7ohTLX7YcskBA3i1ha4/weTqKdVIC+RXNehz8oKWkFO4YCHHR9MU5toUDphQ54T3Kg5rzL+dCfGvDBqHYMZObISiridPNx2M5WpP0xBTLQZRzOhPj+AEvOswGAyAd4nqQr6jdRcuJkwfURTGukYtuMGqo4LVppyRTaJaDhSEJxq1AWkF2scjxpyI0LuO/XIbvSbLTZwWsKf6sKPU5gOLsdUM4FisJQ1xBG4rvk7PwIccbgiGkjOdzYsX6Krj3AmDc6zcVtz+6l9+osM3OE5+8xM33KxUw6owmlhTcvho8krJ6qyunSsk=
     
   file:
     ${HOST}-aplus-newlib.tar.xz
 
-  skip_cleanup: true
   overwrite: true
   draft: false
+  edge: true
 
   on:
     repo: kwrx/aplus-newlib

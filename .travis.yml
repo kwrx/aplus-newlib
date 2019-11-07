@@ -33,7 +33,7 @@ deploy:
   file:
     ${HOST}-aplus-newlib.tar.xz
 
-  cleanup: false
+  cleanup: true
   overwrite: true
   draft: false
 

@@ -23,17 +23,17 @@ pushd build-newlib
     export PATH="$PATH:$(pwd)/toolchain/bin"
 
 
-    ../configure --target=$host-aplus --prefix=                         || exit_and_clean 1
+    ../configure --target=$host-aplus --prefix=                          || exit_and_clean 1
 
     # Build
-    make CFLAGS_FOR_TARGET="-w -g -O2" CFLAGS_FOR_BUILD=" -w -g -O2"    || exit_and_clean 1
-    make DESTDIR="$(pwd)/toolchain" install                             || exit_and_clean 1
+    make -j2 CFLAGS_FOR_TARGET="-w -g -O2" CFLAGS_FOR_BUILD=" -w -g -O2" || exit_and_clean 1
+    make -j2 DESTDIR="$(pwd)/toolchain" install                          || exit_and_clean 1
 
     # Test
-    echo "int main() {return 0;}" | $host-aplus-gcc -x c -              || exit_and_clean 1
+    echo "int main() {return 0;}" | $host-aplus-gcc -x c -               || exit_and_clean 1
 
     # Release
-    make DESTDIR="$(pwd)/release" install                               || exit_and_clean 1
+    make -j2 DESTDIR="$(pwd)/release" install                            || exit_and_clean 1
     
 popd
 

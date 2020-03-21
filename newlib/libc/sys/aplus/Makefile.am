@@ -5,7 +5,7 @@ AM_CCASFLAGS = $(INCLUDES)
 noinst_LIBRARIES = lib.a
  
 if MAY_SUPPLY_SYSCALLS
-extra_objs = _exit.o _isatty.o _lseek64.o close.o fstat.o getpid.o gettimeofday.o kill.o lseek.o read.o sbrk.o write.o
+extra_objs = errno.o sbrk.o syscall.o
 else
 extra_objs =
 endif
@@ -13,7 +13,7 @@ endif
  
 lib_a_SOURCES =
 lib_a_LIBADD = $(extra_objs) dlmalloc.o
-EXTRA_lib_a_SOURCES = crt0.c _exit.c _isatty.c _lseek64.c close.c dlmalloc.c fstat.c getpid.c gettimeofday.c kill.c lseek.c read.c sbrk.c write.c
+EXTRA_lib_a_SOURCES = crt0.c dlmalloc.c errno.c sbrk.c syscall.c
 lib_a_DEPENDENCIES = $(extra_objs) dlmalloc.o
 lib_a_CCASFLAGS = $(AM_CCASFLAGS)
 lib_a_CFLAGS = $(AM_CFLAGS)

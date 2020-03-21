@@ -22,17 +22,20 @@
  */
 
 
-#include <stdio.h>
+#include <stdint.h>
+#include <stddef.h>
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <errno.h>
 
-#include <sys/config.h>
-#include <reent.h>
 
-__attribute__((weak))
+
 void* sbrk(intptr_t increment) {
-    errno = ENOSYS;
-    return NULL;
+    
+    uintptr_t ibrk = __syscall(12, 0, 0, 0, 0, 0, 0);
+    uintptr_t ebrk = __syscall(12, ibrk + increment, 0, 0, 0, 0, 0);
+
+    if(ibrk == ebrk)
+        return errno = ENOMEM, NULL;
+
+    return (void*) ibrk;
+
 }

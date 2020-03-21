@@ -41,3 +41,6 @@ core
 !core/
 
 lost+found
+
+/build-newlib/
+*.tar.xz

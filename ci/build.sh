@@ -8,7 +8,7 @@ mkdir -p build-newlib/release
 
 
 exit_and_clean() {
-    rm -rf build-newlib
+#    rm -rf build-newlib
     exit $1
 }
 

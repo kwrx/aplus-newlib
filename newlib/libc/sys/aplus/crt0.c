@@ -29,20 +29,21 @@ void _start(uintptr_t* args) {
     for(i = (long) &__bss_start; i < (long) &end; i += sizeof(unsigned long))
         *(unsigned long*) i = 0;
 
-
+    
     __libc_init_array();
     __libc_init_traps();
     __libc_init_tls();
 
     atexit(__libc_fini_array);
-    tzset();
 
-
+    
     int argc = (int) args[0];
     char** argv = (char**) args[1];
     char** envp = (char**) args[2];
-
+    
     environ = envp;
+
+    tzset();
 
 
     exit(main(argc, argv, envp));

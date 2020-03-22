@@ -124,6 +124,7 @@ __asm__ (
 
 SC(2, 501, statvfs)
 SC(1, 502, nice)
+SC(3, 8, _lseek64)
 
 
 SC(3, 0, read)

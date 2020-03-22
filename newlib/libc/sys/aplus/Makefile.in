@@ -68,10 +68,8 @@ CONFIG_CLEAN_VPATH_FILES =
 LIBRARIES = $(noinst_LIBRARIES)
 ARFLAGS = cru
 lib_a_AR = $(AR) $(ARFLAGS)
-@MAY_SUPPLY_SYSCALLS_TRUE@am__DEPENDENCIES_1 = _exit.o _isatty.o \
-@MAY_SUPPLY_SYSCALLS_TRUE@	_lseek64.o close.o fstat.o getpid.o \
-@MAY_SUPPLY_SYSCALLS_TRUE@	gettimeofday.o kill.o lseek.o read.o \
-@MAY_SUPPLY_SYSCALLS_TRUE@	sbrk.o write.o
+@MAY_SUPPLY_SYSCALLS_TRUE@am__DEPENDENCIES_1 = errno.o sbrk.o \
+@MAY_SUPPLY_SYSCALLS_TRUE@	syscall.o
 am_lib_a_OBJECTS =
 lib_a_OBJECTS = $(am_lib_a_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
@@ -197,10 +195,10 @@ INCLUDES = $(NEWLIB_CFLAGS) $(CROSS_CFLAGS) $(TARGET_CFLAGS)
 AM_CCASFLAGS = $(INCLUDES)
 noinst_LIBRARIES = lib.a
 @MAY_SUPPLY_SYSCALLS_FALSE@extra_objs = 
-@MAY_SUPPLY_SYSCALLS_TRUE@extra_objs = _exit.o _isatty.o _lseek64.o close.o fstat.o getpid.o gettimeofday.o kill.o lseek.o read.o sbrk.o write.o
+@MAY_SUPPLY_SYSCALLS_TRUE@extra_objs = errno.o sbrk.o syscall.o
 lib_a_SOURCES = 
 lib_a_LIBADD = $(extra_objs) dlmalloc.o
-EXTRA_lib_a_SOURCES = crt0.c _exit.c _isatty.c _lseek64.c close.c dlmalloc.c fstat.c getpid.c gettimeofday.c kill.c lseek.c read.c sbrk.c write.c
+EXTRA_lib_a_SOURCES = crt0.c dlmalloc.c errno.c sbrk.c syscall.c
 lib_a_DEPENDENCIES = $(extra_objs) dlmalloc.o
 lib_a_CCASFLAGS = $(AM_CCASFLAGS)
 lib_a_CFLAGS = $(AM_CFLAGS)
@@ -270,71 +268,17 @@ lib_a-crt0.o: crt0.c
 lib_a-crt0.obj: crt0.c
 	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-crt0.obj `if test -f 'crt0.c'; then $(CYGPATH_W) 'crt0.c'; else $(CYGPATH_W) '$(srcdir)/crt0.c'; fi`
 
-lib_a-_exit.o: _exit.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-_exit.o `test -f '_exit.c' || echo '$(srcdir)/'`_exit.c
-
-lib_a-_exit.obj: _exit.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-_exit.obj `if test -f '_exit.c'; then $(CYGPATH_W) '_exit.c'; else $(CYGPATH_W) '$(srcdir)/_exit.c'; fi`
-
-lib_a-_isatty.o: _isatty.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-_isatty.o `test -f '_isatty.c' || echo '$(srcdir)/'`_isatty.c
-
-lib_a-_isatty.obj: _isatty.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-_isatty.obj `if test -f '_isatty.c'; then $(CYGPATH_W) '_isatty.c'; else $(CYGPATH_W) '$(srcdir)/_isatty.c'; fi`
-
-lib_a-_lseek64.o: _lseek64.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-_lseek64.o `test -f '_lseek64.c' || echo '$(srcdir)/'`_lseek64.c
-
-lib_a-_lseek64.obj: _lseek64.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-_lseek64.obj `if test -f '_lseek64.c'; then $(CYGPATH_W) '_lseek64.c'; else $(CYGPATH_W) '$(srcdir)/_lseek64.c'; fi`
-
-lib_a-close.o: close.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-close.o `test -f 'close.c' || echo '$(srcdir)/'`close.c
-
-lib_a-close.obj: close.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-close.obj `if test -f 'close.c'; then $(CYGPATH_W) 'close.c'; else $(CYGPATH_W) '$(srcdir)/close.c'; fi`
-
 lib_a-dlmalloc.o: dlmalloc.c
 	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-dlmalloc.o `test -f 'dlmalloc.c' || echo '$(srcdir)/'`dlmalloc.c
 
 lib_a-dlmalloc.obj: dlmalloc.c
 	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-dlmalloc.obj `if test -f 'dlmalloc.c'; then $(CYGPATH_W) 'dlmalloc.c'; else $(CYGPATH_W) '$(srcdir)/dlmalloc.c'; fi`
 
-lib_a-fstat.o: fstat.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-fstat.o `test -f 'fstat.c' || echo '$(srcdir)/'`fstat.c
+lib_a-errno.o: errno.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-errno.o `test -f 'errno.c' || echo '$(srcdir)/'`errno.c
 
-lib_a-fstat.obj: fstat.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-fstat.obj `if test -f 'fstat.c'; then $(CYGPATH_W) 'fstat.c'; else $(CYGPATH_W) '$(srcdir)/fstat.c'; fi`
-
-lib_a-getpid.o: getpid.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-getpid.o `test -f 'getpid.c' || echo '$(srcdir)/'`getpid.c
-
-lib_a-getpid.obj: getpid.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-getpid.obj `if test -f 'getpid.c'; then $(CYGPATH_W) 'getpid.c'; else $(CYGPATH_W) '$(srcdir)/getpid.c'; fi`
-
-lib_a-gettimeofday.o: gettimeofday.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-gettimeofday.o `test -f 'gettimeofday.c' || echo '$(srcdir)/'`gettimeofday.c
-
-lib_a-gettimeofday.obj: gettimeofday.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-gettimeofday.obj `if test -f 'gettimeofday.c'; then $(CYGPATH_W) 'gettimeofday.c'; else $(CYGPATH_W) '$(srcdir)/gettimeofday.c'; fi`
-
-lib_a-kill.o: kill.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-kill.o `test -f 'kill.c' || echo '$(srcdir)/'`kill.c
-
-lib_a-kill.obj: kill.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-kill.obj `if test -f 'kill.c'; then $(CYGPATH_W) 'kill.c'; else $(CYGPATH_W) '$(srcdir)/kill.c'; fi`
-
-lib_a-lseek.o: lseek.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-lseek.o `test -f 'lseek.c' || echo '$(srcdir)/'`lseek.c
-
-lib_a-lseek.obj: lseek.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-lseek.obj `if test -f 'lseek.c'; then $(CYGPATH_W) 'lseek.c'; else $(CYGPATH_W) '$(srcdir)/lseek.c'; fi`
-
-lib_a-read.o: read.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-read.o `test -f 'read.c' || echo '$(srcdir)/'`read.c
-
-lib_a-read.obj: read.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-read.obj `if test -f 'read.c'; then $(CYGPATH_W) 'read.c'; else $(CYGPATH_W) '$(srcdir)/read.c'; fi`
+lib_a-errno.obj: errno.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-errno.obj `if test -f 'errno.c'; then $(CYGPATH_W) 'errno.c'; else $(CYGPATH_W) '$(srcdir)/errno.c'; fi`
 
 lib_a-sbrk.o: sbrk.c
 	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-sbrk.o `test -f 'sbrk.c' || echo '$(srcdir)/'`sbrk.c
@@ -342,11 +286,11 @@ lib_a-sbrk.o: sbrk.c
 lib_a-sbrk.obj: sbrk.c
 	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-sbrk.obj `if test -f 'sbrk.c'; then $(CYGPATH_W) 'sbrk.c'; else $(CYGPATH_W) '$(srcdir)/sbrk.c'; fi`
 
-lib_a-write.o: write.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-write.o `test -f 'write.c' || echo '$(srcdir)/'`write.c
+lib_a-syscall.o: syscall.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-syscall.o `test -f 'syscall.c' || echo '$(srcdir)/'`syscall.c
 
-lib_a-write.obj: write.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-write.obj `if test -f 'write.c'; then $(CYGPATH_W) 'write.c'; else $(CYGPATH_W) '$(srcdir)/write.c'; fi`
+lib_a-syscall.obj: syscall.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_a_CFLAGS) $(CFLAGS) -c -o lib_a-syscall.obj `if test -f 'syscall.c'; then $(CYGPATH_W) 'syscall.c'; else $(CYGPATH_W) '$(srcdir)/syscall.c'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

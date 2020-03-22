@@ -1,3 +1,4 @@
+#include <errno.h>
 
 
 #if defined(__x86_64__)
@@ -29,7 +30,7 @@ __asm__ (
 
 
 
-#define SC(args, nr, name)                      \
+#define SC_6(args, nr, name)                    \
     __attribute__((weak))                       \
     long name (long p1, long p2,                \
                long p3, long p4,                \
@@ -40,6 +41,82 @@ __asm__ (
             return errno = -r, -1;              \
         return r;                               \
     }
+
+#define SC_5(args, nr, name)                    \
+    __attribute__((weak))                       \
+    long name (long p1, long p2,                \
+               long p3, long p4,                \
+               long p5         ) {              \
+        long r = __syscall(nr, p1, p2, p3,      \
+                               p4, p5, 0L);     \
+        if(r < 0 && r > -4096L)                 \
+            return errno = -r, -1;              \
+        return r;                               \
+    }
+
+#define SC_4(args, nr, name)                    \
+    __attribute__((weak))                       \
+    long name (long p1, long p2,                \
+               long p3, long p4                 \
+                               ) {              \
+        long r = __syscall(nr, p1, p2, p3,      \
+                               p4, 0L, 0L);     \
+        if(r < 0 && r > -4096L)                 \
+            return errno = -r, -1;              \
+        return r;                               \
+    }
+
+#define SC_3(args, nr, name)                    \
+    __attribute__((weak))                       \
+    long name (long p1, long p2,                \
+               long p3                          \
+                               ) {              \
+        long r = __syscall(nr, p1, p2, p3,      \
+                               0L, 0L, 0L);     \
+        if(r < 0 && r > -4096L)                 \
+            return errno = -r, -1;              \
+        return r;                               \
+    }
+
+#define SC_2(args, nr, name)                    \
+    __attribute__((weak))                       \
+    long name (long p1, long p2                 \
+                                                \
+                               ) {              \
+        long r = __syscall(nr, p1, p2, 0L,      \
+                               0L, 0L, 0L);     \
+        if(r < 0 && r > -4096L)                 \
+            return errno = -r, -1;              \
+        return r;                               \
+    }
+
+#define SC_1(args, nr, name)                    \
+    __attribute__((weak))                       \
+    long name (long p1                          \
+                                                \
+                               ) {              \
+        long r = __syscall(nr, p1, 0L, 0L,      \
+                               0L, 0L, 0L);     \
+        if(r < 0 && r > -4096L)                 \
+            return errno = -r, -1;              \
+        return r;                               \
+    }
+
+#define SC_0(args, nr, name)                    \
+    __attribute__((weak))                       \
+    long name (                                 \
+                                                \
+                               ) {              \
+        long r = __syscall(nr, 0L, 0L, 0L,      \
+                               0L, 0L, 0L);     \
+        if(r < 0 && r > -4096L)                 \
+            return errno = -r, -1;              \
+        return r;                               \
+    }
+
+
+#define SC(args, nr, name)  \
+    SC_##args (args, nr, name)
 
 
 

@@ -25,7 +25,9 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <unistd.h>
+#include <errno.h>
 
+extern long __syscall(long, long, long, long, long, long, long);
 
 
 void* sbrk(intptr_t increment) {

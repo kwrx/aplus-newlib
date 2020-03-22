@@ -26,6 +26,18 @@ __asm__ (
 );
 
 
+#elif defined(__i386__)
+
+long __syscall(long nr, long p1, long p2,
+                        long p3, long p4,
+                        long p5, long p6) {
+
+
+    // TODO: ...                            
+    errno = ENOSYS;
+    return -1;
+}
+
 #endif
 
 
